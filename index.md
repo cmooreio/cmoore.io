@@ -19,7 +19,7 @@ hero:
   </div>
 
   <div class="feature-card ai">
-    <h3>AI Inference Nodes</h3>
+    <h3>Local AI Inference</h3>
   </div>
 
   <div class="feature-card gitops">
@@ -27,7 +27,7 @@ hero:
   </div>
 
   <div class="feature-card storage">
-    <h3>Distributed Storage</h3>
+    <h3>Lightweight Kubernetes</h3>
   </div>
 
   <div class="feature-card observability">
