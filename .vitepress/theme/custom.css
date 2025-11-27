@@ -1,0 +1,115 @@
+/* Custom feature cards with background images */
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin: 48px 0;
+  padding: 0 24px;
+}
+
+.feature-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+}
+
+.feature-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: -1;
+}
+
+.feature-card.raspberry::before {
+  background-image: url('/raspberry-pi-5-homelab-setup--t3chat--1.jpg');
+}
+
+.feature-card.ai::before {
+  background-image: url('/nvidia-jetson-agx-thor-image--t3chat--1.jpg');
+}
+
+.feature-card.gitops::before {
+  background-image: url('/ansible-argocd-homelab--t3chat--1.jpg');
+}
+
+.feature-card.storage::before {
+  background-image: url('/kubernetes-logo-cool-image--t3chat--1.jpg');
+}
+
+.feature-card.observability::before {
+  background-image: url('/prometheus-and-grafana-logos--t3chat--1.jpg');
+}
+
+.feature-card.homeautomation::before {
+  background-image: url('/home-assistant-and-philips-hue--t3chat--1.jpg');
+}
+
+.feature-card h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Dark mode adjustments */
+.dark .feature-card::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .feature-cards {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+
+  .feature-card {
+    min-height: 180px;
+  }
+}

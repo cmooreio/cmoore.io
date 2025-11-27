@@ -9,43 +9,49 @@ The homelab is designed around a few core principles:
 
 ## Network Topology
 
-```
-                    ┌─────────────────────────────────────────┐
-                    │            Internet                      │
-                    └─────────────────┬───────────────────────┘
-                                      │
-                    ┌─────────────────▼───────────────────────┐
-                    │         Cloudflare Tunnel                │
-                    │         (Zero Trust Access)              │
-                    └─────────────────┬───────────────────────┘
-                                      │
-    ┌─────────────────────────────────▼─────────────────────────────────┐
-    │                         Traefik Ingress                            │
-    │                    (TLS termination, routing)                      │
-    └─────────────────────────────────┬─────────────────────────────────┘
-                                      │
-    ┌─────────────────────────────────▼─────────────────────────────────┐
-    │                         K3s Cluster                                │
-    │  ┌──────────┐ ┌──────────┐ ┌──────────┐                          │
-    │  │ psyk3s1  │ │ psyk3s2  │ │ psyk3s3  │  Control Plane           │
-    │  │ (master) │ │ (master) │ │ (master) │  + etcd                  │
-    │  └──────────┘ └──────────┘ └──────────┘                          │
-    │                                                                    │
-    │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐│
-    │  │ psyk3s4  │ │ psyk3s5  │ │ psyk3s6  │ │ psyk3s7  │ │ psyk3s8  ││
-    │  │ (worker) │ │ (worker) │ │ (worker) │ │ (worker) │ │ (worker) ││
-    │  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘│
-    │                                                                    │
-    │  ┌────────────────┐ ┌────────────────┐                            │
-    │  │   psyaimax     │ │    psy4090     │  AI Inference Nodes       │
-    │  │ (ROCm/AMD GPU) │ │ (CUDA/NVIDIA)  │                            │
-    │  └────────────────┘ └────────────────┘                            │
-    └───────────────────────────────────────────────────────────────────┘
-                                      │
-    ┌─────────────────────────────────▼─────────────────────────────────┐
-    │                      Longhorn Storage                              │
-    │              (Distributed across all nodes)                        │
-    └───────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Internet
+        inet((Internet))
+    end
+
+    subgraph Edge["Edge Layer"]
+        cf[Cloudflare Tunnel<br/>Zero Trust Access]
+        traefik[Traefik Ingress<br/>TLS termination & routing]
+    end
+
+    subgraph Cluster["K3s Cluster"]
+        subgraph ControlPlane["Control Plane + etcd"]
+            m1[psyk3s1<br/>master]
+            m2[psyk3s2<br/>master]
+            m3[psyk3s3<br/>master]
+        end
+
+        subgraph Workers["Worker Nodes"]
+            w1[psyk3s4]
+            w2[psyk3s5]
+            w3[psyk3s6]
+            w4[psyk3s7]
+            w5[psyk3s8]
+        end
+
+        subgraph AI["AI Inference Nodes"]
+            ai1[psyaimax<br/>ROCm / AMD GPU]
+            ai2[psy4090<br/>CUDA / NVIDIA]
+        end
+    end
+
+    subgraph Storage["Storage Layer"]
+        longhorn[(Longhorn<br/>Distributed Storage)]
+    end
+
+    inet --> cf
+    cf --> traefik
+    traefik --> ControlPlane
+    ControlPlane --> Workers
+    ControlPlane --> AI
+    Workers --> longhorn
+    AI --> longhorn
 ```
 
 ## Node Roles
@@ -54,12 +60,12 @@ Each node has a specific purpose, controlled through Kubernetes taints and toler
 
 | Node | Role | Taint |
 |------|------|-------|
-| psyk3s1 | Omada Controller | `network-controller-host=true:NoSchedule` |
-| psyk3s2 | Unifi Controller | `network-controller-host=true:NoSchedule` |
-| psyk3s3 | Semaphore (Ansible UI) | `node-management=true:NoSchedule` |
-| psyk3s4-8 | General workloads | None |
-| psyaimax | ROCm AI inference | `rocm-inference=true:NoSchedule` |
-| psy4090 | CUDA AI inference | `cuda-inference=true:NoSchedule` |
+| **psyk3s1** | Omada Controller | `network-controller-host=true:NoSchedule` |
+| **psyk3s2** | Unifi Controller | `network-controller-host=true:NoSchedule` |
+| **psyk3s3** | Semaphore (Ansible UI) | `node-management=true:NoSchedule` |
+| **psyk3s4-8** | General workloads | None |
+| **psyaimax** | ROCm AI inference | `rocm-inference=true:NoSchedule` |
+| **psy4090** | CUDA AI inference | `cuda-inference=true:NoSchedule` |
 
 ## Storage Architecture
 
@@ -70,21 +76,14 @@ Longhorn provides distributed block storage with:
 - **Automatic snapshots** and backup to S3
 - **RWO volumes** for most workloads
 
-See [Storage](/architecture/storage) for details.
 
 ## GitOps Flow
 
+```mermaid
+flowchart LR
+    edit[Edit<br/>values.yaml] --> commit[Commit<br/>locally]
+    commit --> push[Push to<br/>GitHub]
+    push --> argocd[ArgoCD<br/>detects]
+    argocd --> sync[Sync<br/>app]
+    sync --> deploy[Deployed<br/>to cluster]
 ```
-┌────────────┐     ┌────────────┐     ┌────────────┐
-│   Edit     │────▶│   Commit   │────▶│   Push     │
-│ values.yaml│     │  locally   │     │ to GitHub  │
-└────────────┘     └────────────┘     └─────┬──────┘
-                                            │
-                                            ▼
-┌────────────┐     ┌────────────┐     ┌────────────┐
-│  Deployed  │◀────│   Sync     │◀────│  ArgoCD    │
-│ to cluster │     │   app      │     │  detects   │
-└────────────┘     └────────────┘     └────────────┘
-```
-
-See [GitOps Workflow](/architecture/gitops) for the full workflow.
