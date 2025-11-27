@@ -13,12 +13,12 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 
 ### Raspberry Pi Cluster
 
-| Component | Quantity | Description |
-|-----------|----------|-------------|
-| **Raspberry Pi 5 8GB** | 8 | Quad-core Arm Cortex-A76 @ 2.4GHz |
-| **GeeekPi NVMe Carrier** | 8 | PCIe to NVMe adapter for Pi 5 |
-| **Teamgroup MP44L 1TB NVMe** | 8 | PCIe 4.0 NVMe SSD storage |
-| **Waveshare PoE+ HAT (F)** | 8 | 802.3at PoE+ power delivery |
+| Component | Description |
+|-----------|-------------|
+| **Raspberry Pi 5 16GB** | Quad-core Arm Cortex-A76 @ 2.4GHz |
+| **GeeekPi NVMe Carrier** | PCIe to NVMe adapter for Pi 5 |
+| **Teamgroup MP44L 1TB NVMe** | PCIe 4.0 NVMe SSD storage |
+| **Waveshare PoE+ HAT (F)** | 802.3at PoE+ power delivery |
 
 ### AI Inference Nodes
 
@@ -43,7 +43,7 @@ The Raspberry Pi cluster is entirely PoE-powered through the Omada switch, elimi
 
 | Role | Nodes | CPU | Memory | Storage |
 |------|-------|-----|--------|---------|
-| **Control Plane** | 3 | Arm Cortex-A76 @ 2.4GHz | 8GB | 1TB NVMe |
-| **Workers** | 5 | Arm Cortex-A76 @ 2.4GHz | 8GB | 1TB NVMe |
+| **Control Plane** | 3 | Arm Cortex-A76 @ 2.4GHz | 16GB | 1TB NVMe |
+| **Workers** | 5 | Arm Cortex-A76 @ 2.4GHz | 16GB | 1TB NVMe |
 | **AI (ROCm)** | 1 | AMD Ryzen AI Max+ 395 | 128GB | 2TB NVMe |
 | **AI (CUDA)** | 1 | NVIDIA Thor SoC | 128GB | 2TB NVMe |
