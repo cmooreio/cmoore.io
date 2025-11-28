@@ -54,27 +54,27 @@
 }
 
 .feature-card.raspberry::before {
-  background-image: url('/raspberry-pi-5-homelab-setup--t3chat--1.jpg');
+  background-image: url('/raspberry-pi-5.jpg');
 }
 
 .feature-card.ai::before {
-  background-image: url('/nvidia-jetson-agx-thor-image--t3chat--1.jpg');
+  background-image: url('/nvidia-jetson-agx-thor.jpg');
 }
 
 .feature-card.gitops::before {
-  background-image: url('/ansible-argocd-homelab--t3chat--1.jpg');
+  background-image: url('/ansible-argocd.jpg');
 }
 
 .feature-card.storage::before {
-  background-image: url('/kubernetes-logo-cool-image--t3chat--1.jpg');
+  background-image: url('/kubernetes.jpg');
 }
 
 .feature-card.observability::before {
-  background-image: url('/prometheus-and-grafana-logos--t3chat--1.jpg');
+  background-image: url('/prometheus-grafana.jpg');
 }
 
 .feature-card.homeautomation::before {
-  background-image: url('/home-assistant-and-philips-hue--t3chat--1.jpg');
+  background-image: url('/home-assistant-philips-hue.jpg');
 }
 
 .feature-card h3 {
