@@ -18,14 +18,13 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 | **Raspberry Pi 5 16GB** | Quad-core Arm Cortex-A76 @ 2.4GHz |
 | **GeeekPi NVMe Carrier** | PCIe to NVMe adapter for Pi 5 |
 | **Teamgroup MP33 1TB NVMe** | PCIe 3.0 NVMe SSD storage |
-| **Waveshare PoE+ HAT (F)** | 802.3at PoE+ power delivery |
 
 ### AI Inference Nodes
 
 | Component | Description |
 |-----------|-------------|
-| **Minisforum MS-S1 Max** | AMD Ryzen AI Max+ 395, integrated Radeon 8060S GPU (ROCm) |
-| **NVIDIA Jetson AGX Thor** | NVIDIA Thor SoC with next-gen GPU architecture (CUDA) |
+| **Minisforum MS-S1 Max** | 128GB 120w Ryzen AI Max+ 395 (ROCm) |
+| **NVIDIA DGX Spark** | 128GB 130w Blackwell (CUDA) |
 
 ## Networking
 
@@ -35,15 +34,9 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 | **QNAP QSW-3216R-8S8T** | 16-Port half-width rackmount 10GbE core switch (8x SFP+, 8x RJ45) |
 | **Firewalla Gold Plus** | Multi-gigabit firewall and router with IDS/IPS |
 
-## Power & Cooling
+## Power
 
-The Raspberry Pi cluster is entirely PoE-powered through the Omada switch, eliminating the need for individual power supplies. The AI nodes use standard ATX/SFX power supplies.
-
-## Specifications Summary
-
-| Role | Nodes | CPU | Memory | Storage |
-|------|-------|-----|--------|---------|
-| **Control Plane** | 3 | Arm Cortex-A76 @ 2.4GHz | 16GB | 1TB NVMe |
-| **Workers** | 5 | Arm Cortex-A76 @ 2.4GHz | 16GB | 1TB NVMe |
-| **AI (ROCm)** | 1 | AMD Ryzen AI Max+ 395 | 128GB | 2TB NVMe |
-| **AI (CUDA)** | 1 | NVIDIA Thor SoC | 128GB | 2TB NVMe |
+| Component | Description |
+|-----------|-------------|
+| **CyberPower CP1500PFCLCD** | 1500VA/1000W sine wave UPS with LCD display |
+| **Waveshare PoE+ HAT** | 802.3at PoE+ power delivery for Pi cluster |
