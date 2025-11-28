@@ -6,6 +6,12 @@ export default withMermaid(
     title: 'cmoore.io',
     description: 'Homelab Infrastructure Documentation & Showcase',
 
+    vite: {
+      define: {
+        __GIT_COMMIT__: JSON.stringify(process.env.VITE_GIT_COMMIT || 'dev'),
+      },
+    },
+
     head: [
       ['link', { rel: 'icon', href: '/favicon.ico' }],
       ['meta', { name: 'theme-color', content: '#646cff' }],

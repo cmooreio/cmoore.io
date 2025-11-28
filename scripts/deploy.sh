@@ -10,7 +10,9 @@ DIST_WORKTREE="/tmp/cmoore-io-dist"
 
 cd "$REPO_DIR"
 
-echo "Building site..."
+# Export git commit hash for build
+export VITE_GIT_COMMIT=$(git rev-parse --short HEAD)
+echo "Building site (commit: $VITE_GIT_COMMIT)..."
 npm run build
 
 echo "Setting up dist worktree..."

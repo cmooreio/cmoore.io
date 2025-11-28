@@ -159,3 +159,14 @@
     padding: 0 8px;
   }
 }
+
+/* Commit hash in footer */
+.commit-hash {
+  text-align: center;
+  padding: 8px;
+  font-size: 11px;
+  color: var(--vp-c-text-3);
+  font-family: var(--vp-font-family-mono);
+  background: var(--vp-c-bg-soft);
+  border-top: 1px solid var(--vp-c-divider);
+}
