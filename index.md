@@ -11,17 +11,17 @@ import { onMounted } from 'vue'
 
 onMounted(() => {
   const command = 'kubectl get nodes'
-  const output = `NAME        STATUS   ROLES                  VERSION
-psyk3s1     Ready    control-plane,master   v1.31.2+k3s1
-psyk3s2     Ready    control-plane,master   v1.31.2+k3s1
-psyk3s3     Ready    control-plane,master   v1.31.2+k3s1
-psyk3s4     Ready    <none>                 v1.31.2+k3s1
-psyk3s5     Ready    <none>                 v1.31.2+k3s1
-psyk3s6     Ready    <none>                 v1.31.2+k3s1
-psyk3s7     Ready    <none>                 v1.31.2+k3s1
-psyk3s8     Ready    <none>                 v1.31.2+k3s1
-psyaimax    Ready    rocm-inference         v1.31.2+k3s1
-psythor     Ready    cuda-inference         v1.31.2+k3s1`
+  const output = `NAME    STATUS   ROLES                  VERSION
+rpi1    Ready    control-plane,master   v1.31.2+k3s1
+rpi2    Ready    control-plane,master   v1.31.2+k3s1
+rpi3    Ready    control-plane,master   v1.31.2+k3s1
+rpi4    Ready    <none>                 v1.31.2+k3s1
+rpi5    Ready    <none>                 v1.31.2+k3s1
+rpi6    Ready    <none>                 v1.31.2+k3s1
+rpi7    Ready    <none>                 v1.31.2+k3s1
+rpi8    Ready    <none>                 v1.31.2+k3s1
+aimax   Ready    rocm-inference         v1.31.2+k3s1
+thor    Ready    cuda-inference         v1.31.2+k3s1`
 
   // Move terminal into hero container on desktop
   const terminalWrapper = document.querySelector('.hero-with-terminal')
