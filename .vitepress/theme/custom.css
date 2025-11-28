@@ -1,4 +1,36 @@
-/* Custom feature cards with background images */
+/* Mobile navigation - visible only on small screens */
+.mobile-nav {
+  display: none;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px;
+  margin: 0 auto 24px;
+  max-width: 400px;
+}
+
+.mobile-nav a {
+  padding: 10px 16px;
+  background: var(--vp-c-brand-1);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.mobile-nav a:hover {
+  background: var(--vp-c-brand-2);
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+/* Feature cards grid */
 .feature-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -7,17 +39,12 @@
   padding: 0 24px;
 }
 
+/* Individual feature card */
 .feature-card {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
   min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 24px;
-  color: white;
-  text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -26,82 +53,44 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
-.feature-card::before {
-  content: '';
+/* Card image - actual img element for reliable loading */
+.feature-card img {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -2;
-  /* Force GPU rendering to prevent pop-in on scroll */
-  transform: translateZ(0);
-  will-change: transform;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-.feature-card::after {
-  content: '';
+/* Gradient overlay for text readability */
+.card-overlay {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  padding: 48px 24px 24px;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.1) 0%,
+    transparent 0%,
     rgba(0, 0, 0, 0.7) 100%
   );
-  z-index: -1;
 }
 
-.feature-card.raspberry::before {
-  background-image: url('/raspberry-pi-5.jpg');
-}
-
-.feature-card.ai::before {
-  background-image: url('/nvidia-jetson-agx-thor.jpg');
-}
-
-.feature-card.gitops::before {
-  background-image: url('/ansible-argocd.jpg');
-}
-
-.feature-card.storage::before {
-  background-image: url('/kubernetes.jpg');
-}
-
-.feature-card.observability::before {
-  background-image: url('/prometheus-grafana.jpg');
-}
-
-.feature-card.homeautomation::before {
-  background-image: url('/home-assistant-philips-hue.jpg');
-}
-
-.feature-card h3 {
+.card-overlay h3 {
   margin: 0;
   font-size: 1.4rem;
   font-weight: 600;
   color: white;
   text-align: center;
-  width: 100%;
-}
-
-.feature-card p {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.9);
 }
 
 /* Dark mode adjustments */
-.dark .feature-card::after {
+.dark .card-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.2) 0%,
+    transparent 0%,
     rgba(0, 0, 0, 0.8) 100%
   );
 }
@@ -115,48 +104,6 @@
 
   .feature-card {
     min-height: 180px;
-  }
-}
-
-/* Mobile navigation improvements */
-@media (max-width: 768px) {
-  /* Make hamburger menu more visible */
-  .VPNavBarHamburger {
-    --vp-c-text-1: var(--vp-c-brand-1);
-  }
-
-  .VPNavBarHamburger .container {
-    width: 20px;
-    height: 16px;
-  }
-
-  .VPNavBarHamburger .top,
-  .VPNavBarHamburger .middle,
-  .VPNavBarHamburger .bottom {
-    background-color: var(--vp-c-brand-1);
-    height: 3px;
-  }
-
-  /* Add subtle animation to draw attention on load */
-  .VPNavBarHamburger {
-    animation: pulse-menu 2s ease-in-out 1s 2;
-  }
-}
-
-@keyframes pulse-menu {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-}
-
-/* Show nav links on larger mobile screens (480-768px) */
-@media (min-width: 480px) and (max-width: 768px) {
-  .VPNavBarMenu {
-    display: flex !important;
-  }
-
-  .VPNavBarMenu .VPNavBarMenuLink {
-    font-size: 13px;
-    padding: 0 8px;
   }
 }
 

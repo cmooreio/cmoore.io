@@ -15,13 +15,6 @@ export default withMermaid(
     head: [
       ['link', { rel: 'icon', href: '/favicon.ico' }],
       ['meta', { name: 'theme-color', content: '#646cff' }],
-      // Preload feature card images to prevent pop-in on mobile
-      ['link', { rel: 'preload', href: '/raspberry-pi-5.jpg', as: 'image' }],
-      ['link', { rel: 'preload', href: '/nvidia-jetson-agx-thor.jpg', as: 'image' }],
-      ['link', { rel: 'preload', href: '/ansible-argocd.jpg', as: 'image' }],
-      ['link', { rel: 'preload', href: '/kubernetes.jpg', as: 'image' }],
-      ['link', { rel: 'preload', href: '/prometheus-grafana.jpg', as: 'image' }],
-      ['link', { rel: 'preload', href: '/home-assistant-philips-hue.jpg', as: 'image' }],
     ],
 
     themeConfig: {
