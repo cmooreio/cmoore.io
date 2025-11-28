@@ -1,3 +1,179 @@
+/* Hero layout with terminal */
+.VPHero .main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.VPHero .tagline {
+  order: 2;
+}
+
+/* Desktop: Position terminal next to hero text */
+@media (min-width: 960px) {
+  .VPHero .container {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    max-width: 1280px;
+  }
+
+  .VPHero .main {
+    flex: 1;
+    max-width: 550px;
+    order: 1;
+  }
+
+  .hero-terminal-inline {
+    flex-shrink: 0;
+    width: 520px;
+    order: 2;
+  }
+
+  /* Hide the out-of-flow terminal wrapper on desktop */
+  .hero-with-terminal {
+    display: none;
+  }
+}
+
+/* Mobile/tablet: terminal shows below hero in normal flow */
+@media (max-width: 959px) {
+  .hero-with-terminal {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 24px;
+    margin: 0 auto 32px;
+  }
+}
+
+/* Terminal styling */
+.terminal {
+  background: #1a1b26;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 12px;
+  border: 1px solid #2a2b3d;
+}
+
+.terminal-header {
+  background: #24253a;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #2a2b3d;
+}
+
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-dot.red { background: #ff5f57; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #28ca42; }
+
+.terminal-title {
+  margin-left: 8px;
+  color: #787c99;
+  font-size: 12px;
+}
+
+.terminal-body {
+  padding: 16px;
+  min-height: 280px;
+}
+
+.terminal-line.command {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.terminal-line .prompt {
+  color: #7aa2f7;
+  font-weight: bold;
+}
+
+.terminal-line .typed-text {
+  color: #a9b1d6;
+}
+
+.terminal-line .cursor {
+  color: #7aa2f7;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.terminal-output {
+  margin: 0;
+  color: #9aa5ce;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* Hide terminal on mobile, show below hero on tablet */
+@media (max-width: 959px) {
+  .hero-with-terminal {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 24px;
+    margin: -20px auto 24px;
+  }
+
+  .terminal {
+    font-size: 11px;
+  }
+
+  .terminal-body {
+    min-height: auto;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-with-terminal {
+    padding: 0 16px;
+  }
+
+  .terminal {
+    font-size: 10px;
+  }
+
+  .terminal-output {
+    font-size: 9px;
+  }
+}
+
+.attribution {
+  order: 1;
+  text-align: left;
+  font-size: 14px;
+  color: var(--vp-c-text-2);
+  margin: 0;
+}
+
+.attribution a {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+}
+
+.attribution a:hover {
+  text-decoration: underline;
+}
+
 /* Mobile navigation - visible only on small screens */
 .mobile-nav {
   display: none;
@@ -40,17 +216,25 @@
 }
 
 /* Individual feature card */
-.feature-card {
+a.feature-card {
   position: relative;
+  display: block;
   border-radius: 12px;
   overflow: hidden;
   min-height: 200px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.feature-card:hover {
+a.feature-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+a.feature-card:focus {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
 }
 
 /* Card image - actual img element for reliable loading */
