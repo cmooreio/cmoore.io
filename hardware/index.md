@@ -17,7 +17,7 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 |-----------|-------------|
 | **Raspberry Pi 5 16GB** | Quad-core Arm Cortex-A76 @ 2.4GHz |
 | **GeeekPi NVMe Carrier** | PCIe to NVMe adapter for Pi 5 |
-| **Teamgroup MP44L 1TB NVMe** | PCIe 4.0 NVMe SSD storage |
+| **Teamgroup MP33 1TB NVMe** | PCIe 3.0 NVMe SSD storage |
 | **Waveshare PoE+ HAT (F)** | 802.3at PoE+ power delivery |
 
 ### AI Inference Nodes

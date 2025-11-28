@@ -35,7 +35,11 @@
   bottom: 0;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   z-index: -2;
+  /* Force GPU rendering to prevent pop-in on scroll */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .feature-card::after {
@@ -111,5 +115,47 @@
 
   .feature-card {
     min-height: 180px;
+  }
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 768px) {
+  /* Make hamburger menu more visible */
+  .VPNavBarHamburger {
+    --vp-c-text-1: var(--vp-c-brand-1);
+  }
+
+  .VPNavBarHamburger .container {
+    width: 20px;
+    height: 16px;
+  }
+
+  .VPNavBarHamburger .top,
+  .VPNavBarHamburger .middle,
+  .VPNavBarHamburger .bottom {
+    background-color: var(--vp-c-brand-1);
+    height: 3px;
+  }
+
+  /* Add subtle animation to draw attention on load */
+  .VPNavBarHamburger {
+    animation: pulse-menu 2s ease-in-out 1s 2;
+  }
+}
+
+@keyframes pulse-menu {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+/* Show nav links on larger mobile screens (480-768px) */
+@media (min-width: 480px) and (max-width: 768px) {
+  .VPNavBarMenu {
+    display: flex !important;
+  }
+
+  .VPNavBarMenu .VPNavBarMenuLink {
+    font-size: 13px;
+    padding: 0 8px;
   }
 }

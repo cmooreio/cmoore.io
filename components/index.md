@@ -12,8 +12,6 @@ These components form the foundation of the cluster:
 | **Longhorn** | Cloud-native distributed block storage for Kubernetes |
 | **Traefik** | Modern reverse proxy and ingress controller with automatic TLS |
 | **ArgoCD** | Declarative GitOps continuous delivery for Kubernetes |
-| **cert-manager** | Automated TLS certificate management with Let's Encrypt |
-| **Sealed Secrets** | Encrypted secrets that can be safely stored in Git |
 
 ## Observability Stack
 
@@ -24,7 +22,7 @@ These components form the foundation of the cluster:
 | **Loki** | Log aggregation system using label-based querying similar to Prometheus |
 | **Alertmanager** | Alert routing and notification management with Discord integration |
 
-## Applications
+## Other Applications
 
 | Application | Description |
 |-------------|-------------|
