@@ -1,50 +1,59 @@
-/* Hero layout with terminal */
-.VPHero .main {
+/* Hero showcase - 2 column layout with terminal and topology */
+.hero-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 0 24px;
+  margin: 0 auto 48px;
+  max-width: 1400px;
+}
+
+.showcase-terminal {
+  display: flex;
+  align-items: stretch;
+}
+
+.showcase-terminal .terminal {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.VPHero .tagline {
-  order: 2;
+.showcase-terminal .terminal-body {
+  flex: 1;
+  min-height: 280px;
 }
 
-/* Desktop: Position terminal next to hero text */
-@media (min-width: 960px) {
-  .VPHero .container {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    gap: 48px;
-    max-width: 1280px;
-  }
-
-  .VPHero .main {
-    flex: 1;
-    max-width: 550px;
-    order: 1;
-  }
-
-  .hero-terminal-inline {
-    flex-shrink: 0;
-    width: 520px;
-    order: 2;
-  }
-
-  /* Hide the out-of-flow terminal wrapper on desktop */
-  .hero-with-terminal {
-    display: none;
-  }
+.showcase-topology {
+  min-height: 400px;
 }
 
-/* Mobile/tablet: terminal shows below hero in normal flow */
-@media (max-width: 959px) {
-  .hero-with-terminal {
-    display: block;
-    width: 100%;
+.showcase-topology .network-topology {
+  height: 100%;
+  min-height: 400px;
+}
+
+/* Responsive: stack on mobile/tablet */
+@media (max-width: 1024px) {
+  .hero-showcase {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .showcase-terminal {
     max-width: 600px;
-    padding: 0 24px;
-    margin: 0 auto 32px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .showcase-topology {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-showcase {
+    padding: 0 16px;
   }
 }
 
@@ -122,17 +131,8 @@
   overflow-x: auto;
 }
 
-/* Hide terminal on mobile, show below hero on tablet */
-@media (max-width: 959px) {
-  .hero-with-terminal {
-    position: static;
-    transform: none;
-    width: 100%;
-    max-width: 100%;
-    padding: 0 24px;
-    margin: -20px auto 24px;
-  }
-
+/* Terminal responsive adjustments */
+@media (max-width: 1024px) {
   .terminal {
     font-size: 11px;
   }
@@ -144,10 +144,6 @@
 }
 
 @media (max-width: 480px) {
-  .hero-with-terminal {
-    padding: 0 16px;
-  }
-
   .terminal {
     font-size: 10px;
   }

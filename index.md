@@ -8,6 +8,7 @@ hero:
 
 <script setup>
 import { onMounted } from 'vue'
+import NetworkTopology from './components/NetworkTopology.vue'
 
 onMounted(() => {
   const command = 'kubectl get nodes'
@@ -23,37 +24,11 @@ rpi8    Ready    <none>                 v1.31.2+k3s1
 aimax   Ready    rocm-inference         v1.31.2+k3s1
 thor    Ready    cuda-inference         v1.31.2+k3s1`
 
-  // Move terminal into hero container on desktop
-  const terminalWrapper = document.querySelector('.hero-with-terminal')
-  const heroContainer = document.querySelector('.VPHero .container')
-
-  if (terminalWrapper && heroContainer && window.innerWidth >= 960) {
-    const terminal = terminalWrapper.querySelector('.terminal')
-    if (terminal) {
-      const clone = terminal.cloneNode(true)
-      clone.classList.add('hero-terminal-inline')
-      heroContainer.appendChild(clone)
-      // Update references to cloned elements
-      startTyping(
-        clone.querySelector('.typed-text'),
-        clone.querySelector('.cursor'),
-        clone.querySelector('.terminal-output'),
-        command,
-        output
-      )
-      return
-    }
-  }
-
-  // Fallback for mobile or if injection fails
   const typedText = document.querySelector('.typed-text')
   const cursor = document.querySelector('.cursor')
   const outputEl = document.querySelector('.terminal-output')
-  if (typedText && cursor && outputEl) {
-    startTyping(typedText, cursor, outputEl, command, output)
-  }
 
-  function startTyping(typedText, cursor, outputEl, command, output) {
+  if (typedText && cursor && outputEl) {
     let i = 0
     const typeCommand = () => {
       if (i < command.length) {
@@ -87,22 +62,27 @@ thor    Ready    cuda-inference         v1.31.2+k3s1`
   <a href="/hardware/">Hardware</a>
 </div>
 
-<div class="hero-with-terminal">
-  <div class="terminal">
-    <div class="terminal-header">
-      <span class="terminal-dot red"></span>
-      <span class="terminal-dot yellow"></span>
-      <span class="terminal-dot green"></span>
-      <span class="terminal-title">kubectl</span>
-    </div>
-    <div class="terminal-body">
-      <div class="terminal-line command">
-        <span class="prompt">$</span>
-        <span class="typed-text"></span>
-        <span class="cursor">▋</span>
+<div class="hero-showcase">
+  <div class="showcase-terminal">
+    <div class="terminal">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">kubectl</span>
       </div>
-      <pre class="terminal-output"></pre>
+      <div class="terminal-body">
+        <div class="terminal-line command">
+          <span class="prompt">$</span>
+          <span class="typed-text"></span>
+          <span class="cursor">▋</span>
+        </div>
+        <pre class="terminal-output"></pre>
+      </div>
     </div>
+  </div>
+  <div class="showcase-topology">
+    <NetworkTopology />
   </div>
 </div>
 
