@@ -24,7 +24,7 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 | Component | Description |
 |-----------|-------------|
 | **Minisforum MS-S1 Max** | 128GB 120w Ryzen AI Max+ 395 (ROCm) |
-| **NVIDIA DGX Spark** | 128GB 130w Blackwell (CUDA) |
+| **NVIDIA AGX Thor** | 128GB 130w Blackwell (CUDA) |
 
 ## Networking
 
