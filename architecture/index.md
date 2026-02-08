@@ -1,3 +1,12 @@
+---
+prev:
+  text: 'Home'
+  link: '/'
+next:
+  text: 'Software'
+  link: '/components/'
+---
+
 # Architecture Overview
 
 The homelab is designed around a few core principles:
@@ -27,7 +36,7 @@ Each node has a specific purpose, controlled through Kubernetes taints and toler
 | **rpi2** | Unifi Controller | `network-controller-host=true:NoSchedule` |
 | **rpi3** | Semaphore (Ansible UI) | `node-management=true:NoSchedule` |
 | **rpi4-8** | General workloads | None |
-| **aimax** | ROCm AI inference | `rocm-inference=true:NoSchedule` |
+| **aimax** | ROCm AI inference + Observium | `rocm-inference=true:NoSchedule` |
 | **thor** | CUDA AI inference | `cuda-inference=true:NoSchedule` |
 
 ## Storage Architecture
@@ -39,13 +48,12 @@ Longhorn provides distributed block storage with:
 - **Automatic snapshots** and backup to S3
 - **RWO volumes** for most workloads
 
-
 ## GitOps Flow
 
 All changes flow through Git:
 
 1. **Edit** - Modify Helm values or manifests locally
-2. **Commit** - Commit changes to your branch
+2. **Commit** - Pre-commit hooks validate YAML, Helm charts, and scan for secrets
 3. **Push** - Push to GitHub repository
-4. **Detect** - ArgoCD detects changes (3 min sync interval)
+4. **Detect** - ArgoCD detects changes (3-minute sync interval)
 5. **Deploy** - Changes automatically applied to cluster

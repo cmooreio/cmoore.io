@@ -18,6 +18,10 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.svg',
 
+    search: {
+      provider: 'local',
+    },
+
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Architecture', link: '/architecture/' },
@@ -48,6 +52,9 @@ export default defineConfig({
           text: 'Software',
           items: [
             { text: 'Overview', link: '/components/' },
+            { text: 'Infrastructure', link: '/components/infrastructure' },
+            { text: 'Observability', link: '/components/observability' },
+            { text: 'AI Inference', link: '/components/ai-inference' },
           ]
         },
         {
@@ -57,8 +64,11 @@ export default defineConfig({
             { text: 'Prometheus', link: 'https://prometheus.io/' },
             { text: 'Grafana', link: 'https://grafana.com/' },
             { text: 'Loki', link: 'https://grafana.com/oss/loki/' },
+            { text: 'Observium', link: 'https://www.observium.org/' },
             { text: 'Home Assistant', link: 'https://www.home-assistant.io/' },
             { text: 'llama.cpp', link: 'https://github.com/ggerganov/llama.cpp' },
+            { text: 'LiteLLM', link: 'https://litellm.ai/' },
+            { text: 'Open WebUI', link: 'https://openwebui.com/' },
             { text: 'Semaphore', link: 'https://semaphoreui.com/' },
           ]
         }

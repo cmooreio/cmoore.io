@@ -202,88 +202,54 @@
   }
 }
 
-/* Feature cards grid */
-.feature-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin: 48px 0;
-  padding: 0 24px;
-}
-
-/* Individual feature card */
-a.feature-card {
-  position: relative;
-  display: block;
-  border-radius: 12px;
+/* Enhanced table styling */
+.vp-doc table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
   overflow: hidden;
-  min-height: 200px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-a.feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-}
-
-a.feature-card:focus {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 2px;
-}
-
-/* Card image - actual img element for reliable loading */
-.feature-card img {
-  position: absolute;
-  top: 0;
-  left: 0;
+  border: 1px solid var(--vp-c-divider);
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  margin: 20px 0;
 }
 
-/* Gradient overlay for text readability */
-.card-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 48px 24px 24px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
-}
-
-.card-overlay h3 {
-  margin: 0;
-  font-size: 1.4rem;
+.vp-doc th {
+  background: var(--vp-c-bg-soft);
   font-weight: 600;
-  color: white;
-  text-align: center;
+  text-align: left;
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 2px solid var(--vp-c-divider);
 }
 
-/* Dark mode adjustments */
-.dark .card-overlay {
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
+.vp-doc td {
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 1px solid var(--vp-c-divider);
+  transition: background 0.15s ease;
 }
 
-/* Responsive adjustments */
+.vp-doc tr:last-child td {
+  border-bottom: none;
+}
+
+.vp-doc tbody tr:nth-child(even) td {
+  background: var(--vp-c-bg-alt);
+}
+
+.vp-doc tbody tr:hover td {
+  background: var(--vp-c-bg-soft);
+}
+
+/* Responsive tables */
 @media (max-width: 640px) {
-  .feature-cards {
-    grid-template-columns: 1fr;
-    padding: 0 16px;
+  .vp-doc table {
+    font-size: 0.9rem;
   }
 
-  .feature-card {
-    min-height: 180px;
+  .vp-doc th,
+  .vp-doc td {
+    padding: 8px 12px;
   }
 }
 

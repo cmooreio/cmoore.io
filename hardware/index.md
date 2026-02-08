@@ -1,3 +1,9 @@
+---
+prev:
+  text: 'AI Inference'
+  link: '/components/ai-inference'
+---
+
 # Hardware
 
 The homelab is built on a mix of ARM and x86 hardware, optimized for power efficiency and performance where needed.
@@ -15,16 +21,24 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 
 | Component | Description |
 |-----------|-------------|
-| **Raspberry Pi 5 16GB** | Quad-core Arm Cortex-A76 @ 2.4GHz |
+| **Raspberry Pi 5 16GB** | 8x Quad-core Arm Cortex-A76 @ 2.4GHz |
 | **GeeekPi NVMe Carrier** | PCIe to NVMe adapter for Pi 5 |
-| **Teamgroup MP33 1TB NVMe** | PCIe 3.0 NVMe SSD storage |
+| **Teamgroup MP33 1TB NVMe** | PCIe 3.0 NVMe SSD storage per node |
+
+::: info Cluster Roles
+The 8 Pis are split across roles: 3 run the K3s control plane (etcd + API server), and 5 serve as general-purpose workers. Dedicated workloads like Omada, Unifi, and Semaphore are pinned to specific nodes via taints.
+:::
 
 ### AI Inference Nodes
 
 | Component | Description |
 |-----------|-------------|
-| **Minisforum MS-S1 Max** | 128GB 120w Ryzen AI Max+ 395 (ROCm) |
-| **NVIDIA AGX Thor** | 128GB 130w Blackwell (CUDA) |
+| **Minisforum MS-S1 Max** | 128GB unified memory, 120W Ryzen AI Max+ 395 (ROCm) |
+| **NVIDIA AGX Thor** | 128GB, 130W Blackwell GPU (CUDA) |
+
+::: tip
+Both AI nodes use taints to ensure only inference workloads are scheduled on them. See [AI Inference](/components/ai-inference) for the multi-pod architecture.
+:::
 
 ## Networking
 
@@ -40,3 +54,7 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 |-----------|-------------|
 | **CyberPower CP1500PFCLCD** | 1500VA/1000W sine wave UPS with LCD display |
 | **Waveshare PoE+ HAT** | 802.3at PoE+ power delivery for Pi cluster |
+
+::: info PoE Power Delivery
+All 8 Raspberry Pis are powered via PoE+ from the Omada switch, eliminating individual power adapters and simplifying cable management.
+:::

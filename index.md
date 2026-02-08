@@ -9,6 +9,7 @@ hero:
 <script setup>
 import { onMounted } from 'vue'
 import NetworkTopology from './components/NetworkTopology.vue'
+import FeatureCards from './components/FeatureCards.vue'
 
 onMounted(() => {
   const command = 'kubectl get nodes'
@@ -86,46 +87,4 @@ thor    Ready    cuda-inference         v1.31.2+k3s1`
   </div>
 </div>
 
-<div class="feature-cards">
-  <a href="/hardware/" class="feature-card">
-    <img src="/raspberry-pi-5.jpg" alt="Raspberry Pi 5" loading="eager" decoding="async" />
-    <div class="card-overlay">
-      <h3>Raspberry Pi 5 Cluster</h3>
-    </div>
-  </a>
-
-  <a href="/components/#other-applications" class="feature-card">
-    <img src="/nvidia-jetson-agx-thor.jpg" alt="NVIDIA GPU" loading="eager" decoding="async" />
-    <div class="card-overlay">
-      <h3>Local AI Inference</h3>
-    </div>
-  </a>
-
-  <a href="/architecture/#gitops-flow" class="feature-card">
-    <img src="/ansible-argocd.jpg" alt="ArgoCD" loading="eager" decoding="async" />
-    <div class="card-overlay">
-      <h3>GitOps with ArgoCD</h3>
-    </div>
-  </a>
-
-  <a href="/architecture/" class="feature-card">
-    <img src="/kubernetes.jpg" alt="Kubernetes" loading="eager" decoding="async" />
-    <div class="card-overlay">
-      <h3>Lightweight Kubernetes</h3>
-    </div>
-  </a>
-
-  <a href="/components/#observability-stack" class="feature-card">
-    <img src="/prometheus-grafana.jpg" alt="Prometheus and Grafana" loading="eager" decoding="async" />
-    <div class="card-overlay">
-      <h3>Full Observability</h3>
-    </div>
-  </a>
-
-  <a href="/components/#other-applications" class="feature-card">
-    <img src="/home-assistant-philips-hue.jpg" alt="Home Assistant" loading="eager" decoding="async" />
-    <div class="card-overlay">
-      <h3>Home Automation</h3>
-    </div>
-  </a>
-</div>
+<FeatureCards />
