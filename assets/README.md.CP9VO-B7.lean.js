@@ -1,0 +1,1 @@
+import{_ as i,c as s,o as a,ag as t}from"./chunks/framework.CI6Ra_OS.js";const k=JSON.parse('{"title":"cmoore.io","description":"","frontmatter":{},"headers":[],"relativePath":"README.md","filePath":"README.md"}'),n={name:"README.md"};function l(o,e,r,p,h,d){return a(),s("div",null,[...e[0]||(e[0]=[t("",10)])])}const u=i(n,[["render",l]]);export{k as __pageData,u as default};
