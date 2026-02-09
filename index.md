@@ -14,16 +14,16 @@ import FeatureCards from './components/FeatureCards.vue'
 onMounted(() => {
   const command = 'kubectl get nodes'
   const output = `NAME    STATUS   ROLES                  VERSION
-rpi1    Ready    control-plane,master   v1.31.2+k3s1
-rpi2    Ready    control-plane,master   v1.31.2+k3s1
-rpi3    Ready    control-plane,master   v1.31.2+k3s1
-rpi4    Ready    <none>                 v1.31.2+k3s1
-rpi5    Ready    <none>                 v1.31.2+k3s1
-rpi6    Ready    <none>                 v1.31.2+k3s1
-rpi7    Ready    <none>                 v1.31.2+k3s1
-rpi8    Ready    <none>                 v1.31.2+k3s1
-aimax   Ready    rocm-inference         v1.31.2+k3s1
-thor    Ready    cuda-inference         v1.31.2+k3s1`
+rpi1    Ready    control-plane,master   v1.35.0+k3s3
+rpi2    Ready    control-plane,master   v1.35.0+k3s3
+rpi3    Ready    control-plane,master   v1.35.0+k3s3
+rpi4    Ready    <none>                 v1.35.0+k3s3
+rpi5    Ready    <none>                 v1.35.0+k3s3
+rpi6    Ready    <none>                 v1.35.0+k3s3
+rpi7    Ready    <none>                 v1.35.0+k3s3
+rpi8    Ready    <none>                 v1.35.0+k3s3
+aimax   Ready    rocm-inference         v1.35.0+k3s3
+thor    Ready    cuda-inference         v1.35.0+k3s3`
 
   const typedText = document.querySelector('.typed-text')
   const cursor = document.querySelector('.cursor')
