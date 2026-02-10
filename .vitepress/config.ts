@@ -27,6 +27,7 @@ export default defineConfig({
       { text: 'Architecture', link: '/architecture/' },
       { text: 'Software', link: '/components/' },
       { text: 'Hardware', link: '/hardware/' },
+      { text: 'Status', link: 'https://status.cmoore.io' },
     ],
 
     sidebar: {
