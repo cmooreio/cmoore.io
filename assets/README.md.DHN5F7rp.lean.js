@@ -1,0 +1,1 @@
+import{_ as i,o as s,c as a,ag as t}from"./chunks/framework.DydSEmA7.js";const k=JSON.parse('{"title":"cmoore.io","description":"","frontmatter":{},"headers":[],"relativePath":"README.md","filePath":"README.md"}'),n={name:"README.md"};function l(o,e,r,p,h,d){return s(),a("div",null,[...e[0]||(e[0]=[t("",10)])])}const u=i(n,[["render",l]]);export{k as __pageData,u as default};

@@ -1,0 +1,1 @@
+import{_ as a,o as t,c as o,ag as d}from"./chunks/framework.DydSEmA7.js";const h=JSON.parse('{"title":"CLAUDE.md","description":"","frontmatter":{},"headers":[],"relativePath":"CLAUDE.md","filePath":"CLAUDE.md"}'),n={name:"CLAUDE.md"};function r(i,e,s,c,l,m){return t(),o("div",null,[...e[0]||(e[0]=[d("",6)])])}const _=a(n,[["render",r]]);export{h as __pageData,_ as default};
