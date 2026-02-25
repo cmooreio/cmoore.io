@@ -7,8 +7,11 @@ hero:
 ---
 
 <script setup>
+import { ref } from 'vue'
 import NetworkTopology from './components/NetworkTopology.vue'
 import FeatureCards from './components/FeatureCards.vue'
+
+const lightboxOpen = ref(false)
 </script>
 
 <div class="mobile-nav">
@@ -19,7 +22,7 @@ import FeatureCards from './components/FeatureCards.vue'
 
 <div class="hero-showcase">
   <div class="showcase-photo">
-    <a href="/hardware/">
+    <a href="#" @click.prevent="lightboxOpen = true">
       <img src="/homelab.jpeg" alt="Homelab rack with Raspberry Pi cluster, networking gear, and AI nodes" />
     </a>
   </div>
@@ -29,3 +32,9 @@ import FeatureCards from './components/FeatureCards.vue'
 </div>
 
 <FeatureCards />
+
+<Teleport to="body">
+  <div v-if="lightboxOpen" class="lightbox-overlay" @click="lightboxOpen = false">
+    <img src="/homelab.jpeg" alt="Homelab rack with Raspberry Pi cluster, networking gear, and AI nodes" />
+  </div>
+</Teleport>
