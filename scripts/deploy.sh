@@ -13,7 +13,7 @@ cd "$REPO_DIR"
 # Export git commit hash for build
 export VITE_GIT_COMMIT=$(git rev-parse --short HEAD)
 echo "Building site (commit: $VITE_GIT_COMMIT)..."
-npm run build
+pnpm build
 
 echo "Setting up dist worktree..."
 if [ -d "$DIST_WORKTREE" ]; then

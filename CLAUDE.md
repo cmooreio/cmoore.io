@@ -4,8 +4,8 @@ VitePress static site. Config in `.vitepress/config.ts`.
 
 ## Commands
 
-- `npm run dev` - Development
-- `npm run deploy` - Build and push to `dist` branch
+- `pnpm dev` - Development
+- `pnpm deploy` - Build and push to `dist` branch
 
 ## Deployment
 
