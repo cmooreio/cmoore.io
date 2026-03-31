@@ -1,0 +1,1 @@
+import{_ as i,o as s,c as a,ag as t}from"./chunks/framework.Bv8Pgr5E.js";const k=JSON.parse('{"title":"cmoore.io","description":"","frontmatter":{},"headers":[],"relativePath":"README.md","filePath":"README.md"}'),n={name:"README.md"};function o(l,e,r,p,d,h){return s(),a("div",null,[...e[0]||(e[0]=[t("",11)])])}const m=i(n,[["render",o]]);export{k as __pageData,m as default};
