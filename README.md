@@ -15,7 +15,7 @@ architecture notes, and generated chart reference docs belong in the root repo's
 ## Development
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev         # Local dev server
 pnpm build       # Build for production
 pnpm preview     # Preview production build
