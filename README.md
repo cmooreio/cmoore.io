@@ -1,33 +1,27 @@
 # cmoore.io
 
-Static documentation site for the homelab cluster.
+Public-facing VitePress site for the homelab. Content lives here; operational runbooks and chart docs live in the repo root, not in this directory.
 
-This directory owns the public-facing website. Operational documentation, runbooks,
-architecture notes, and generated chart reference docs belong in the root repo's
-`docs/` tree, not here.
+## Layout
 
-## Tech Stack
+- `.vitepress/config.ts` — site config (nav, sidebar, theme)
+- `.vitepress/theme/` — custom theme overrides
+- `architecture/`, `components/`, `hardware/` — content pages
+- `components/*.vue` — Vue components (e.g. `NetworkTopology`, `FeatureCards`)
+- `public/` — static assets served at site root
+- `scripts/deploy.sh` — build + push to `dist` branch
 
-- **VitePress** - Vue-powered static site generator
-- **Mermaid** - Diagram rendering
-- **TypeScript** - Configuration
-
-## Development
+## Develop
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm dev         # Local dev server
-pnpm build       # Build for production
-pnpm preview     # Preview production build
+pnpm dev        # local server with HMR
+pnpm build      # production build to .vitepress/dist
+pnpm preview    # preview the production build
 ```
 
-## Deployment
+## Deploy
 
-The site uses a git-sync deployment pattern:
+`pnpm deploy` builds the site and pushes the output to the `dist` branch via git worktree. The in-cluster `cmoore-io` chart runs nginx with a git-sync sidecar that pulls `dist` every 60s, so the live site updates within a minute of the push. Traefik fronts it with a Let's Encrypt cert from cert-manager.
 
-1. Run `pnpm deploy` to build and push to the `dist` branch
-2. Kubernetes deployment pulls from `dist` branch every 60 seconds via git-sync sidecar
-3. Nginx serves the static files
-4. Traefik provides ingress with Let's Encrypt TLS
-
-Site updates automatically within 60 seconds of pushing to `dist`.
+Never commit to `dist` by hand — the deploy script is the only writer.
