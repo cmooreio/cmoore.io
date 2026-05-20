@@ -32,11 +32,11 @@ Each node has a specific purpose, controlled through Kubernetes taints and toler
 
 | Node | Role | Taint |
 |------|------|-------|
-| **rpi1** | Omada Controller | `network-controller-host=true:NoSchedule` |
+| **rpi1** | Control plane + Omada Controller | `network-controller-host=true:NoSchedule` |
 | **rpi2** | Unifi Controller | `network-controller-host=true:NoSchedule` |
-| **rpi3** | Semaphore (Ansible UI) | `node-management=true:NoSchedule` |
+| **rpi3** | Control plane + Semaphore (Ansible UI) | `node-management=true:NoSchedule` |
 | **rpi4-8** | General workloads | None |
-| **aimax** | ROCm AI inference + Observium | `rocm-inference=true:NoSchedule` |
+| **aimax** | Control plane + ROCm AI inference + Observium | `rocm-inference=true:NoSchedule` |
 | **thor** | CUDA AI inference | `cuda-inference=true:NoSchedule` |
 
 ## Storage Architecture

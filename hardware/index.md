@@ -26,7 +26,7 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 | **Teamgroup MP33 1TB NVMe** | PCIe 3.0 NVMe SSD storage per node |
 
 ::: info Cluster Roles
-The 8 Pis are split across roles: 3 run the K3s control plane (etcd + API server), and 5 serve as general-purpose workers. Dedicated workloads like Omada, Unifi, and Semaphore are pinned to specific nodes via taints.
+2 Pis run the K3s control plane alongside psyaimax (3-node HA etcd + API server), and 6 Pis serve as general-purpose workers. Dedicated workloads like Omada, Unifi, and Semaphore are pinned to specific control plane nodes via taints.
 :::
 
 ### AI Inference Nodes

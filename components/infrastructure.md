@@ -15,12 +15,12 @@ The cluster's foundation layer handles orchestration, storage, networking, and s
 
 [K3s](https://k3s.io/) is a lightweight, certified Kubernetes distribution built for edge and IoT environments. It packages the entire control plane into a single binary under 100MB.
 
-The cluster runs **3 control plane nodes** for high availability (etcd quorum) and **7 worker nodes** (5 general-purpose + 2 AI inference).
+The cluster runs **3 control plane nodes** for high availability (etcd quorum) and **7 worker nodes** (6 general-purpose + 1 AI inference).
 
 ::: info Cluster Topology
-- **Control plane**: rpi1, rpi2, rpi3 (etcd + API server)
-- **General workers**: rpi4 - rpi8
-- **AI inference**: aimax (ROCm), thor (CUDA)
+- **Control plane**: rpi1, rpi3, aimax (etcd + API server)
+- **General workers**: rpi2, rpi4 - rpi8
+- **AI inference**: aimax (ROCm, dual-role with control plane), thor (CUDA)
 :::
 
 ## Longhorn

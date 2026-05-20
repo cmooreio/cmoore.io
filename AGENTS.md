@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 VitePress static site published at https://cmoore.io. Deployed by the `cmoore-io` Helm chart (`kubernetes/charts/cmoore-io/`) via a nginx + git-sync pair.
 
