@@ -14,7 +14,7 @@ VitePress static site published at https://cmoore.io. Deployed by the `cmoore-io
 
 - `pnpm dev` — local dev with HMR
 - `pnpm build` — output to `.vitepress/dist/`
-- `pnpm deploy` — build + push to `dist` branch (runs `scripts/deploy.sh`)
+- `pnpm run deploy` — build + push to `dist` branch (runs `scripts/deploy.sh`; use `run` so pnpm does not treat `deploy` as its own command)
 
 Use `pnpm install --frozen-lockfile`; exact-pin any new dep in `package.json` (repo supply-chain rule).
 

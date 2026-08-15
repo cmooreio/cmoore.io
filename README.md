@@ -22,6 +22,6 @@ pnpm preview    # preview the production build
 
 ## Deploy
 
-`pnpm deploy` builds the site and pushes the output to the `dist` branch via git worktree. The in-cluster `cmoore-io` chart runs nginx with a git-sync sidecar that pulls `dist` every 60s, so the live site updates within a minute of the push. Traefik fronts it with a Let's Encrypt cert from cert-manager.
+`pnpm run deploy` builds the site and pushes the output to the `dist` branch via git worktree. Use `run` so pnpm does not treat `deploy` as its workspace-deploy command. The in-cluster `cmoore-io` chart runs nginx with a git-sync sidecar that pulls `dist` every 60s, so the live site updates within a minute of the push. Traefik fronts it with a Let's Encrypt cert from cert-manager.
 
 Never commit to `dist` by hand — the deploy script is the only writer.
