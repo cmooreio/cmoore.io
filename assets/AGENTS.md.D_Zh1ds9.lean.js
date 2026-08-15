@@ -1,1 +1,0 @@
-import{_ as o,o as t,c as d,ag as c}from"./chunks/framework.Bv8Pgr5E.js";const m=JSON.parse('{"title":"AGENTS.md","description":"","frontmatter":{},"headers":[],"relativePath":"AGENTS.md","filePath":"AGENTS.md"}'),a={name:"AGENTS.md"};function i(n,e,s,r,l,p){return t(),d("div",null,[...e[0]||(e[0]=[c("",10)])])}const u=o(a,[["render",i]]);export{m as __pageData,u as default};
