@@ -15,13 +15,16 @@ The cluster's foundation layer handles orchestration, storage, networking, and s
 
 [K3s](https://k3s.io/) is a lightweight, certified Kubernetes distribution built for edge and IoT environments. It packages the entire control plane into a single binary under 100MB.
 
-The cluster runs **3 control plane nodes** for high availability (etcd quorum) and **7 worker nodes** (6 general-purpose + 1 AI inference).
+The cluster has **9 hosts**: 3 control-plane Pis, 4 Pi workers, and 2 AI workers.
 
 ::: info Cluster Topology
-- **Control plane**: rpi1, rpi3, aimax (etcd + API server)
-- **General workers**: rpi2, rpi4 - rpi8
-- **AI inference**: aimax (ROCm, dual-role with control plane), thor (CUDA)
+- **Control plane**: rpi1, rpi2, rpi3 (etcd + API server)
+- **General workers**: rpi5, rpi6, rpi8
+- **Dedicated UniFi**: rpi7
+- **AI inference**: aimax (ROCm worker), thor (CUDA worker)
 :::
+
+`rpi2` is an untainted control-plane member, so general pods can land there. `rpi4` is retired.
 
 ## Longhorn
 
@@ -29,9 +32,9 @@ The cluster runs **3 control plane nodes** for high availability (etcd quorum) a
 
 | Feature | Configuration |
 |---------|---------------|
-| **Replication** | 3x for critical data |
-| **Storage Backend** | NVMe SSD on each node |
-| **Snapshots** | Automatic with S3 backup |
+| **Replication** | 2x default |
+| **Storage Backend** | NVMe SSD on each Pi |
+| **Snapshots** | Automatic, with backup to MinIO (S3 API) |
 | **Volume Mode** | RWO (ReadWriteOnce) |
 
 ::: tip Deployment Pattern
@@ -42,8 +45,8 @@ Applications with RWO PVCs use `Recreate` strategy instead of `RollingUpdate` to
 
 [Traefik](https://traefik.io/) serves as the ingress controller and reverse proxy, handling TLS termination and routing for all web-facing services.
 
-- Automatic HTTPS via cert-manager and Let's Encrypt
-- Middleware for rate limiting, headers, and redirects
+- Public HTTPS via Cloudflare Tunnel (`cloudflared`) and Let's Encrypt
+- LAN services on Traefik port 8443 (`websecure-local`)
 - LoadBalancer IP: `192.168.64.1` via kube-vip
 
 ## ArgoCD
@@ -52,7 +55,7 @@ Applications with RWO PVCs use `Recreate` strategy instead of `RollingUpdate` to
 
 | Setting | Value |
 |---------|-------|
-| **Sync interval** | 3 minutes |
+| **Sync interval** | 10 minutes |
 | **Self-heal** | Enabled |
 | **LoadBalancer IP** | `192.168.64.120` |
 
@@ -74,9 +77,6 @@ Never commit plaintext secrets to the repository. Always use `kubeseal` to encry
 
 ## Network Policies
 
-Network policies follow an **allow-first, deny-all** approach:
+The CNI (Flannel) is **default-allow**. Explicit `NetworkPolicy` objects exist where they matter — CoreDNS, Traefik, MongoDB, and a few application charts (including AI inference egress restrictions). There is no cluster-wide default-deny.
 
-1. Create `NetworkPolicy` rules that explicitly allow required traffic
-2. Apply a default-deny policy last to block everything else
-
-This ensures services can only communicate with their declared dependencies.
+Host-network controllers (Omada, UniFi) still need LAN reachability for device adoption, which is why a blanket deny-all is not applied.

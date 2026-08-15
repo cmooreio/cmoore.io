@@ -21,12 +21,12 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 
 | Component | Description |
 |-----------|-------------|
-| **Raspberry Pi 5 16GB** | 8x Quad-core Arm Cortex-A76 @ 2.4GHz |
+| **Raspberry Pi 5 16GB** | 7× quad-core Arm Cortex-A76 @ 2.4GHz |
 | **GeeekPi NVMe Carrier** | PCIe to NVMe adapter for Pi 5 |
 | **Teamgroup MP33 1TB NVMe** | PCIe 3.0 NVMe SSD storage per node |
 
 ::: info Cluster Roles
-2 Pis run the K3s control plane alongside psyaimax (3-node HA etcd + API server), and 6 Pis serve as general-purpose workers. Dedicated workloads like Omada, Unifi, and Semaphore are pinned to specific control plane nodes via taints.
+Three Pis run the K3s control plane (`rpi1`, `rpi2`, `rpi3`) for HA etcd. `rpi2` is untainted and also runs general pods. `rpi5`, `rpi6`, and `rpi8` are general workers; `rpi7` is dedicated to UniFi. Omada and Semaphore are pinned to `rpi1` and `rpi3`. A fourth Pi (`rpi4`) is retired.
 :::
 
 ### AI Inference Nodes
@@ -37,7 +37,7 @@ The homelab is built on a mix of ARM and x86 hardware, optimized for power effic
 | **NVIDIA AGX Thor** | 128GB, 130W Blackwell GPU (CUDA) |
 
 ::: tip
-Both AI nodes use taints to ensure only inference workloads are scheduled on them. See [AI Inference](/components/ai-inference) for the multi-pod architecture.
+Both AI nodes are workers (not etcd members) and use taints so only inference workloads — plus Observium on aimax — land there. See [AI Inference](/components/ai-inference) for the multi-pod architecture.
 :::
 
 ## Networking
@@ -56,5 +56,5 @@ Both AI nodes use taints to ensure only inference workloads are scheduled on the
 | **Waveshare PoE+ HAT** | 802.3at PoE+ power delivery for Pi cluster |
 
 ::: info PoE Power Delivery
-All 8 Raspberry Pis are powered via PoE+ from the Omada switch, eliminating individual power adapters and simplifying cable management.
+All 7 Raspberry Pis are powered via PoE+ from the Omada switch, eliminating individual power adapters and simplifying cable management.
 :::

@@ -6,7 +6,8 @@ VitePress static site published at https://cmoore.io. Deployed by the `cmoore-io
 
 - Pages: `index.md`, `architecture/`, `components/`, `hardware/`
 - Nav and sidebar: `.vitepress/config.ts` — update here when adding a new page
-- Custom Vue components live in `components/*.vue` and are registered in `.vitepress/theme/index.ts`
+- Custom Vue components live in `components/*.vue` and are imported from pages
+- Cluster facts (node list, k3s version, replica count) live in `data/cluster.ts` — update that file when topology changes so the diagram, node table, and kubectl sample stay aligned
 - Static assets (images, favicon, logo) go in `public/`
 
 ## Commands

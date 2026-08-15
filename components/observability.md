@@ -17,13 +17,13 @@ Full-stack monitoring with metrics, logs, alerting, and network monitoring.
 
 | Setting | Value |
 |---------|-------|
-| **Scrape interval** | 60 seconds |
+| **Scrape interval** | 30 seconds |
 | **Evaluation interval** | 60 seconds |
 | **Storage** | Longhorn PVC |
 | **Deployment** | StatefulSet |
 
-::: info Why 60-second intervals?
-The evaluation interval is set to 60 seconds (not the typical 30s) to prevent slow aggregation queries on the ARM-based nodes. Shorter intervals can cause query timeouts with complex recording rules.
+::: info Why 60-second evaluation?
+Alerting rules evaluate every 60 seconds (not the typical 30s) to avoid slow aggregations on the ARM nodes. Scrapes stay at 30s so dashboards still update quickly.
 :::
 
 ## Grafana
@@ -32,11 +32,11 @@ The evaluation interval is set to 60 seconds (not the typical 30s) to prevent sl
 
 ## Loki
 
-[Loki](https://grafana.com/oss/loki/) aggregates logs from all pods using a label-based indexing approach similar to Prometheus. It pairs with Grafana for log exploration and correlation with metrics.
+[Loki](https://grafana.com/oss/loki/) aggregates logs from all pods using a label-based indexing approach similar to Prometheus. [Grafana Alloy](https://grafana.com/oss/alloy/) agents ship logs from each node. Grafana is the query UI.
 
 ## Alertmanager
 
-[Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) handles alert routing, deduplication, and notification delivery. Alerts from Prometheus are routed to **Discord** for real-time notifications.
+[Alertmanager](https://prometheus.io/docs/alerting/alertmanager/) handles alert routing, deduplication, and notification delivery. Prometheus alerts go to **[ntfy](https://ntfy.sh/)** (critical and warning topics). [Gatus](https://status.cmoore.io) is the public endpoint status page.
 
 ## Observium
 

@@ -41,7 +41,7 @@
           </g>
         </svg>
       </div>
-      <div class="card-overlay"><h3>Raspberry Pi 5 Cluster</h3><p class="card-subtitle">8x RPi5 + 2 GPU nodes</p></div>
+      <div class="card-overlay"><h3>Raspberry Pi 5 Cluster</h3><p class="card-subtitle">7× Pi 5 + 2 GPU nodes</p></div>
     </a>
 
     <!-- Local AI Inference -->
@@ -532,5 +532,28 @@ a.feature-card:focus {
   .metric-line {
     animation: metric-draw 0.01s ease forwards;
   }
+}
+
+:global(html:not(.dark)) .card-canvas--cluster,
+:global(html:not(.dark)) .card-canvas--neural,
+:global(html:not(.dark)) .card-canvas--gitops,
+:global(html:not(.dark)) .card-canvas--k8s,
+:global(html:not(.dark)) .card-canvas--metrics,
+:global(html:not(.dark)) .card-canvas--home {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+:global(html:not(.dark)) .card-overlay {
+  background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.85) 100%);
+}
+
+:global(html:not(.dark)) .card-overlay h3 {
+  color: var(--vp-c-text-1);
+}
+
+:global(html:not(.dark)) .card-subtitle {
+  color: var(--vp-c-text-2);
 }
 </style>

@@ -8,76 +8,16 @@ next:
 ---
 
 <script setup>
-import { onMounted } from 'vue'
-
-onMounted(() => {
-  const command = 'kubectl get nodes'
-  const output = `NAME    STATUS   ROLES                  VERSION
-rpi1    Ready    control-plane,master   v1.36.0+k3s1
-rpi2    Ready    <none>                 v1.36.0+k3s1
-rpi3    Ready    control-plane,master   v1.36.0+k3s1
-rpi4    Ready    <none>                 v1.36.0+k3s1
-rpi5    Ready    <none>                 v1.36.0+k3s1
-rpi6    Ready    <none>                 v1.36.0+k3s1
-rpi7    Ready    <none>                 v1.36.0+k3s1
-rpi8    Ready    <none>                 v1.36.0+k3s1
-aimax   Ready    control-plane,master   v1.36.0+k3s1
-thor    Ready    <none>                 v1.36.0+k3s1`
-
-  const typedText = document.querySelector('.typed-text')
-  const cursor = document.querySelector('.cursor')
-  const outputEl = document.querySelector('.terminal-output')
-
-  if (typedText && cursor && outputEl) {
-    let i = 0
-    const typeCommand = () => {
-      if (i < command.length) {
-        typedText.textContent += command[i]
-        i++
-        setTimeout(typeCommand, 80 + Math.random() * 40)
-      } else {
-        cursor.style.display = 'none'
-        setTimeout(() => {
-          let j = 0
-          const lines = output.split('\n')
-          const showLine = () => {
-            if (j < lines.length) {
-              outputEl.textContent += lines[j] + '\n'
-              j++
-              setTimeout(showLine, 50)
-            }
-          }
-          showLine()
-        }, 300)
-      }
-    }
-    setTimeout(typeCommand, 800)
-  }
-})
+import KubectlNodes from './KubectlNodes.vue'
 </script>
 
-<div class="software-terminal">
-  <div class="terminal">
-    <div class="terminal-header">
-      <span class="terminal-dot red"></span>
-      <span class="terminal-dot yellow"></span>
-      <span class="terminal-dot green"></span>
-      <span class="terminal-title">kubectl</span>
-    </div>
-    <div class="terminal-body">
-      <div class="terminal-line command">
-        <span class="prompt">$</span>
-        <span class="typed-text"></span>
-        <span class="cursor">▋</span>
-      </div>
-      <pre class="terminal-output"></pre>
-    </div>
-  </div>
-</div>
+<ClientOnly>
+  <KubectlNodes />
+</ClientOnly>
 
 # Software Overview
 
-The homelab runs a variety of infrastructure components and applications, all managed through GitOps with ArgoCD.
+The homelab runs infrastructure and applications managed through GitOps with ArgoCD. This page is a catalog, not an operational runbook.
 
 ## Infrastructure Layer
 
@@ -87,10 +27,12 @@ These components form the foundation of the cluster. See the [Infrastructure](/c
 |-----------|---------|
 | **K3s** | Lightweight Kubernetes distribution optimized for edge and IoT |
 | **Longhorn** | Cloud-native distributed block storage for Kubernetes |
-| **Traefik** | Modern reverse proxy and ingress controller with automatic TLS |
+| **Traefik** | Reverse proxy and ingress controller with automatic TLS |
+| **cloudflared** | Cloudflare Tunnel for public HTTPS without inbound port forwards |
 | **ArgoCD** | Declarative GitOps continuous delivery for Kubernetes |
 | **cert-manager** | Automatic TLS certificate provisioning via Let's Encrypt |
 | **Sealed Secrets** | Encrypted secret storage safe for Git repositories |
+| **kube-vip** | LoadBalancer IP allocation on the LAN |
 
 ## Observability Stack
 
@@ -98,11 +40,12 @@ Full-stack monitoring and alerting. See the [Observability](/components/observab
 
 | Component | Description |
 |-----------|-------------|
-| **Prometheus** | Time-series metrics collection with 60-second scrape intervals and persistent storage |
-| **Grafana** | Visualization platform with pre-built dashboards for cluster monitoring |
-| **Loki** | Log aggregation system using label-based querying similar to Prometheus |
-| **Alertmanager** | Alert routing and notification management with Discord integration |
-| **Observium** | SNMP-based network monitoring for switches and infrastructure devices |
+| **Prometheus** | Time-series metrics with a 30-second scrape interval |
+| **Grafana** | Dashboards for cluster, node, and application metrics |
+| **Loki + Alloy** | Log aggregation; Alloy ships pod logs to Loki |
+| **Alertmanager** | Alert routing to [ntfy](https://ntfy.sh/) |
+| **Gatus** | Public status page at [status.cmoore.io](https://status.cmoore.io) |
+| **Observium** | SNMP-based network monitoring for switches and infrastructure |
 
 ## AI Inference
 
@@ -110,26 +53,40 @@ Local LLM and generative AI serving. See the [AI Inference](/components/ai-infer
 
 | Component | Description |
 |-----------|-------------|
-| **llama.cpp** | LLM inference engine with ROCm GPU acceleration |
-| **vLLM** | High-throughput model serving on CUDA |
-| **LiteLLM** | Unified OpenAI-compatible API gateway for all models |
+| **llama.cpp** | LLM inference engine with ROCm GPU acceleration on aimax |
+| **vLLM** | High-throughput model serving on Thor (CUDA) |
+| **LiteLLM** | Unified OpenAI-compatible API gateway |
 | **Open WebUI** | ChatGPT-style web interface for local models |
 | **ComfyUI** | Node-based image generation workflows |
-| **Speaches** | Text-to-speech and audio transcription |
+| **Speaches** | TTS and transcription via a custom Thor image |
 
 ## Applications
 
 | Application | Description |
 |-------------|-------------|
-| **Home Assistant** | Smart home automation platform with Zigbee device support and voice control |
+| **Home Assistant** | Home automation with Zigbee2MQTT, Mosquitto, and Music Assistant |
 | **Omada Controller** | TP-Link network management for switches and access points |
-| **Unifi Controller** | Ubiquiti network management running on a dedicated node |
-| **Semaphore** | Web-based UI for running Ansible playbooks and managing automation jobs |
-| **Kiwix** | Offline content server for Wikipedia and other reference material |
+| **UniFi Controller** | Ubiquiti network management on a dedicated worker |
+| **Semaphore** | Web UI for Ansible playbooks |
+| **Kiwix** | Offline Wikipedia and reference material |
+| **Homer** | Internal homepage for self-hosted services |
+| **IT Tools** | Browser utilities for development and ops |
+| **n8n** | Workflow automation |
+| **Vaultwarden** | Bitwarden-compatible password manager |
+| **ntfy** | Push notifications for cluster alerts |
+| **music-server** | Navidrome, Lidarr, Prowlarr, and qBittorrent |
+
+## Backup & storage services
+
+| Component | Description |
+|-----------|-------------|
+| **MinIO** | S3-compatible object store (NFS-backed) used as the backup hub |
+| **Velero** | Daily Kubernetes object backups to MinIO |
+| **DB dump CronJobs** | MongoDB (Omada/UniFi) and PostgreSQL backups |
 
 ::: info Deployment Patterns
 - **Deployment + Recreate**: Apps with RWO PVCs (prevents Multi-Attach errors)
 - **StatefulSet**: Databases (MongoDB, PostgreSQL, MariaDB, Prometheus)
-- **CronJob**: Backup jobs (etcd, MongoDB, PostgreSQL)
-- **Java apps** (Omada/Unifi): Need 2000m CPU at startup, use `hostNetwork=true`
+- **CronJob**: Backup jobs (etcd, MongoDB, PostgreSQL, Velero)
+- **Java apps** (Omada/UniFi): `hostNetwork=true` so devices on other subnets can reach the controllers. Omada is sized up to 2000m CPU; UniFi up to 1000m.
 :::
