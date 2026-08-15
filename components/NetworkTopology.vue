@@ -19,7 +19,7 @@ const nodes = ref([
     id: 'cloudflare',
     type: 'custom',
     position: { x: 250, y: 100 },
-    data: { label: 'Cloudflare Tunnel', subtitle: 'Zero Trust Access', icon: '🛡️', category: 'edge' }
+    data: { label: 'Cloudflare Tunnel', subtitle: 'Outbound only', icon: '🛡️', category: 'edge' }
   },
   {
     id: 'traefik',
@@ -32,62 +32,56 @@ const nodes = ref([
     id: 'rpi1',
     type: 'custom',
     position: { x: 100, y: 250 },
-    data: { label: 'rpi1', subtitle: 'control-plane', icon: '🎛️', category: 'control' }
+    data: { label: 'rpi1', subtitle: 'control-plane + Omada', icon: '🎛️', category: 'control' }
+  },
+  {
+    id: 'rpi2',
+    type: 'custom',
+    position: { x: 350, y: 250 },
+    data: { label: 'rpi2', subtitle: 'control-plane', icon: '🎛️', category: 'control' }
   },
   {
     id: 'rpi3',
     type: 'custom',
-    position: { x: 350, y: 250 },
-    data: { label: 'rpi3', subtitle: 'control-plane', icon: '🎛️', category: 'control' }
-  },
-  {
-    id: 'aimax',
-    type: 'custom',
     position: { x: 600, y: 250 },
-    data: { label: 'aimax', subtitle: 'control-plane + ROCm', icon: '🔴', category: 'control' }
+    data: { label: 'rpi3', subtitle: 'control-plane + Semaphore', icon: '🎛️', category: 'control' }
   },
   // Workers
   {
-    id: 'rpi2',
-    type: 'custom',
-    position: { x: 0, y: 400 },
-    data: { label: 'rpi2', subtitle: 'worker', icon: '🖥️', category: 'worker' }
-  },
-  {
-    id: 'rpi4',
-    type: 'custom',
-    position: { x: 120, y: 400 },
-    data: { label: 'rpi4', subtitle: 'worker', icon: '🖥️', category: 'worker' }
-  },
-  {
     id: 'rpi5',
     type: 'custom',
-    position: { x: 240, y: 400 },
+    position: { x: 80, y: 400 },
     data: { label: 'rpi5', subtitle: 'worker', icon: '🖥️', category: 'worker' }
   },
   {
     id: 'rpi6',
     type: 'custom',
-    position: { x: 360, y: 400 },
+    position: { x: 220, y: 400 },
     data: { label: 'rpi6', subtitle: 'worker', icon: '🖥️', category: 'worker' }
   },
   {
     id: 'rpi7',
     type: 'custom',
-    position: { x: 480, y: 400 },
-    data: { label: 'rpi7', subtitle: 'worker', icon: '🖥️', category: 'worker' }
+    position: { x: 360, y: 400 },
+    data: { label: 'rpi7', subtitle: 'UniFi', icon: '🖥️', category: 'worker' }
   },
   {
     id: 'rpi8',
     type: 'custom',
-    position: { x: 600, y: 400 },
+    position: { x: 500, y: 400 },
     data: { label: 'rpi8', subtitle: 'worker', icon: '🖥️', category: 'worker' }
   },
   // AI Nodes
   {
+    id: 'aimax',
+    type: 'custom',
+    position: { x: 220, y: 550 },
+    data: { label: 'aimax', subtitle: 'ROCm (worker)', icon: '🔴', category: 'ai' }
+  },
+  {
     id: 'thor',
     type: 'custom',
-    position: { x: 350, y: 550 },
+    position: { x: 480, y: 550 },
     data: { label: 'thor', subtitle: 'CUDA / NVIDIA', icon: '🟢', category: 'ai' }
   },
   // Storage
@@ -105,25 +99,23 @@ const edges = ref([
   { id: 'e-cf-traefik', source: 'cloudflare', target: 'traefik', animated: true, style: { stroke: '#6366f1' } },
   // Edge to Control Plane
   { id: 'e-traefik-cp1', source: 'traefik', target: 'rpi1', style: { stroke: '#8b5cf6' } },
+  { id: 'e-traefik-cp2', source: 'traefik', target: 'rpi2', style: { stroke: '#8b5cf6' } },
   { id: 'e-traefik-cp3', source: 'traefik', target: 'rpi3', style: { stroke: '#8b5cf6' } },
-  { id: 'e-traefik-aimax', source: 'traefik', target: 'aimax', style: { stroke: '#8b5cf6' } },
   // Control Plane to Workers
-  { id: 'e-cp1-w2', source: 'rpi1', target: 'rpi2', style: { stroke: '#22c55e', strokeWidth: 1 } },
-  { id: 'e-cp1-w4', source: 'rpi1', target: 'rpi4', style: { stroke: '#22c55e', strokeWidth: 1 } },
-  { id: 'e-cp3-w5', source: 'rpi3', target: 'rpi5', style: { stroke: '#22c55e', strokeWidth: 1 } },
-  { id: 'e-cp3-w6', source: 'rpi3', target: 'rpi6', style: { stroke: '#22c55e', strokeWidth: 1 } },
-  { id: 'e-aimax-w7', source: 'aimax', target: 'rpi7', style: { stroke: '#22c55e', strokeWidth: 1 } },
-  { id: 'e-aimax-w8', source: 'aimax', target: 'rpi8', style: { stroke: '#22c55e', strokeWidth: 1 } },
+  { id: 'e-cp1-w5', source: 'rpi1', target: 'rpi5', style: { stroke: '#22c55e', strokeWidth: 1 } },
+  { id: 'e-cp2-w6', source: 'rpi2', target: 'rpi6', style: { stroke: '#22c55e', strokeWidth: 1 } },
+  { id: 'e-cp3-w7', source: 'rpi3', target: 'rpi7', style: { stroke: '#22c55e', strokeWidth: 1 } },
+  { id: 'e-cp2-w8', source: 'rpi2', target: 'rpi8', style: { stroke: '#22c55e', strokeWidth: 1 } },
   // Control Plane to AI
+  { id: 'e-cp2-aimax', source: 'rpi2', target: 'aimax', style: { stroke: '#f43f5e', strokeWidth: 2 } },
   { id: 'e-cp3-thor', source: 'rpi3', target: 'thor', style: { stroke: '#f43f5e', strokeWidth: 2 } },
   // Storage to Workers (animated upward)
-  { id: 'e-storage-w2', source: 'longhorn', target: 'rpi2', sourceHandle: 'top', targetHandle: 'target-bottom', animated: true, style: { stroke: '#f59e0b', strokeDasharray: '5,5' } },
-  { id: 'e-storage-w4', source: 'longhorn', target: 'rpi4', sourceHandle: 'top', targetHandle: 'target-bottom', animated: true, style: { stroke: '#f59e0b', strokeDasharray: '5,5' } },
   { id: 'e-storage-w5', source: 'longhorn', target: 'rpi5', sourceHandle: 'top', targetHandle: 'target-bottom', animated: true, style: { stroke: '#f59e0b', strokeDasharray: '5,5' } },
   { id: 'e-storage-w6', source: 'longhorn', target: 'rpi6', sourceHandle: 'top', targetHandle: 'target-bottom', animated: true, style: { stroke: '#f59e0b', strokeDasharray: '5,5' } },
   { id: 'e-storage-w7', source: 'longhorn', target: 'rpi7', sourceHandle: 'top', targetHandle: 'target-bottom', animated: true, style: { stroke: '#f59e0b', strokeDasharray: '5,5' } },
   { id: 'e-storage-w8', source: 'longhorn', target: 'rpi8', sourceHandle: 'top', targetHandle: 'target-bottom', animated: true, style: { stroke: '#f59e0b', strokeDasharray: '5,5' } },
   // Storage to AI (animated upward)
+  { id: 'e-storage-aimax', source: 'longhorn', target: 'aimax', sourceHandle: 'top', targetHandle: 'target-bottom', animated: true, style: { stroke: '#f59e0b', strokeDasharray: '5,5' } },
   { id: 'e-storage-thor', source: 'longhorn', target: 'thor', sourceHandle: 'top', targetHandle: 'target-bottom', animated: true, style: { stroke: '#f59e0b', strokeDasharray: '5,5' } },
 ])
 

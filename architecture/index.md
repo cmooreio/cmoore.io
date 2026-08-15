@@ -33,17 +33,18 @@ Each node has a specific purpose, controlled through Kubernetes taints and toler
 | Node | Role | Taint |
 |------|------|-------|
 | **rpi1** | Control plane + Omada Controller | `network-controller-host=true:NoSchedule` |
-| **rpi2** | Unifi Controller | `network-controller-host=true:NoSchedule` |
+| **rpi2** | Control plane (etcd, general workloads) | None |
 | **rpi3** | Control plane + Semaphore (Ansible UI) | `node-management=true:NoSchedule` |
-| **rpi4-8** | General workloads | None |
-| **aimax** | Control plane + ROCm AI inference + Observium | `rocm-inference=true:NoSchedule` |
+| **rpi5, rpi6, rpi8** | General workloads | None |
+| **rpi7** | UniFi Controller | `network-controller-host=true:NoSchedule` |
+| **aimax** | ROCm AI inference + Observium (worker) | `rocm-inference=true:NoSchedule` |
 | **thor** | CUDA AI inference | `cuda-inference=true:NoSchedule` |
 
 ## Storage Architecture
 
 Longhorn provides distributed block storage with:
 
-- **3x replication** for critical data
+- **2x replication** for volume data
 - **NVMe-backed** storage on each Pi
 - **Automatic snapshots** and backup to S3
 - **RWO volumes** for most workloads
@@ -55,5 +56,5 @@ All changes flow through Git:
 1. **Edit** - Modify Helm values or manifests locally
 2. **Commit** - Pre-commit hooks validate YAML, Helm charts, and scan for secrets
 3. **Push** - Push to GitHub repository
-4. **Detect** - ArgoCD detects changes (3-minute sync interval)
+4. **Detect** - ArgoCD detects changes (10-minute sync interval)
 5. **Deploy** - Changes automatically applied to cluster
